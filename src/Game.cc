@@ -38,7 +38,7 @@ void Game::MainLoop()
 
   void Game::Update()
   {
-    
+
   }
 
   void Game::Start()
@@ -61,5 +61,5 @@ void Game::MainLoop()
 
   void Game::InputHandle()
   {
-
+    rectangle->move(InputSystem::GetAxis());
   }
