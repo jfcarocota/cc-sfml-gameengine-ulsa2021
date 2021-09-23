@@ -6,6 +6,7 @@ Game::Game()
 {
   window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), GAME_NAME);
   event = new sf::Event();
+  gameClock = new sf::Clock();
 }
 
 Game::~Game()
@@ -30,6 +31,9 @@ void Game::MainLoop()
       }
     }
 
+    deltaTime = gameClock->getElapsedTime().asSeconds();
+    gameClock->restart();
+
     InputHandle();
     Update();
     Render();
@@ -38,7 +42,7 @@ void Game::MainLoop()
 
   void Game::Update()
   {
-
+    std::cout << "deltaTime: " << deltaTime << std::endl;
   }
 
   void Game::Start()
@@ -61,5 +65,5 @@ void Game::MainLoop()
 
   void Game::InputHandle()
   {
-    rectangle->move(InputSystem::GetAxis());
+    rectangle->move(InputSystem::GetAxis() * deltaTime * 200.f);
   }
