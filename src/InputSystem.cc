@@ -1,4 +1,4 @@
-#include "Engine/InputSystem.hh"
+#include "InputSystem.hh"
 
 InputSystem::InputSystem()
 {

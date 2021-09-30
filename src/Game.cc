@@ -1,12 +1,17 @@
-#include "Engine/CommonHeaders.hh"
+#include "CommonHeaders.hh"
+#include "Character.hh"
 
 sf::RectangleShape* rectangle{new sf::RectangleShape(sf::Vector2f(100.f, 100.f))};
+Character* character1{new Character()};
 
 Game::Game()
 {
   window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), GAME_NAME);
   event = new sf::Event();
   gameClock = new sf::Clock();
+
+  character1 = new Character(ASSETS_SPRITES, sf::Vector2f(100.f, 100.f), GAME_SCALE,
+  16, 16, 0, 5, 200.f, window);
 }
 
 Game::~Game()
@@ -42,7 +47,7 @@ void Game::MainLoop()
 
   void Game::Update()
   {
-    std::cout << "deltaTime: " << deltaTime << std::endl;
+    //std::cout << "deltaTime: " << deltaTime << std::endl;
   }
 
   void Game::Start()
@@ -60,10 +65,10 @@ void Game::MainLoop()
 
   void Game::Draw()
   {
-    window->draw(*rectangle);
+    character1->Draw();
   }
 
   void Game::InputHandle()
   {
-    rectangle->move(InputSystem::GetAxis() * deltaTime * 200.f);
+    character1->Movement(deltaTime);
   }
