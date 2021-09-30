@@ -3,6 +3,7 @@
 
 sf::RectangleShape* rectangle{new sf::RectangleShape(sf::Vector2f(100.f, 100.f))};
 Character* character1{new Character()};
+TextAsset* text1{};
 
 Game::Game()
 {
@@ -12,6 +13,8 @@ Game::Game()
 
   character1 = new Character(ASSETS_SPRITES, sf::Vector2f(100.f, 100.f), GAME_SCALE,
   16, 16, 0, 5, 200.f, window);
+  text1 = new TextAsset(window, ASSETS_FONT, "ULSA Game Engine Sample", 
+  14, sf::Color::White, sf::Vector2f(50.f, 50.f));
 }
 
 Game::~Game()
@@ -66,6 +69,7 @@ void Game::MainLoop()
   void Game::Draw()
   {
     character1->Draw();
+    text1->Draw();
   }
 
   void Game::InputHandle()
