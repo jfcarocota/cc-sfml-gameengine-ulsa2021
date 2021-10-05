@@ -10,15 +10,24 @@ Game::Game()
   window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), GAME_NAME);
   event = new sf::Event();
   gameClock = new sf::Clock();
+  //gravity = new b2Vec2(0.f, 9.8f);
+  gravity = new b2Vec2(0.f, 0.f);
+  world = new b2World(*gravity);
 
   character1 = new Character(ASSETS_SPRITES, sf::Vector2f(100.f, 100.f), GAME_SCALE,
-  16, 16, 0, 5, 200.f, window);
+  16, 16, 0, 5, 200.f, window, world);
   text1 = new TextAsset(window, ASSETS_FONT, "ULSA Game Engine Sample", 
   14, sf::Color::White, sf::Vector2f(50.f, 50.f));
 }
 
 Game::~Game()
 {
+}
+
+void Game::Start()
+{
+  rectangle->setFillColor(sf::Color::Red);
+  rectangle->setPosition(sf::Vector2f(300.f, 500.f));
 }
 
 void Game::Run()
@@ -42,21 +51,23 @@ void Game::MainLoop()
     deltaTime = gameClock->getElapsedTime().asSeconds();
     gameClock->restart();
 
+    UpdatePhysics();
     InputHandle();
     Update();
     Render();
   }
 }
 
+  void Game::UpdatePhysics()
+  {
+    world->Step(deltaTime, 8, 8);
+    world->ClearForces();
+  }
+
   void Game::Update()
   {
     //std::cout << "deltaTime: " << deltaTime << std::endl;
-  }
-
-  void Game::Start()
-  {
-    rectangle->setFillColor(sf::Color::Red);
-    rectangle->setPosition(sf::Vector2f(300.f, 500.f));
+    character1->Update();
   }
 
   void Game::Render()

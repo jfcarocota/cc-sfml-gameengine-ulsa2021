@@ -2,6 +2,7 @@
 #include<SFML/Graphics.hpp>
 #include<string>
 #include<iostream>
+#include "Rigidbody.hh"
 
 class Character
 {
@@ -13,15 +14,16 @@ private:
   float height{};
   float moveSpeed;
   sf::Texture* texture;
-  //std::string textureUrl;
   sf::RenderWindow* window{};
+  Rigidbody* rigidbody{};
 public:
   Character();
   Character(const char* textureUrl, sf::Vector2f position, 
   float scale, float width, float height, int col, int row, float moveSpeed, 
-  sf::RenderWindow*& window);
+  sf::RenderWindow*& window, b2World*& world);
   ~Character();
 
+  void Update();
   void Draw();
   void Movement(float& deltaTime);
   void FlipSprite();
