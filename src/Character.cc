@@ -28,7 +28,6 @@ float height, int col, int row, float moveSpeed, sf::RenderWindow*& window, b2Wo
   sprite->setPosition(position);
   sprite->setScale(sf::Vector2f(scale, scale));
   sprite->setColor(sf::Color::White);
-  sprite->setOrigin(sprite->getLocalBounds().width / 2.f, sprite->getLocalBounds().height / 2.f);
 
   idleAnim = new Animation(0.05f, 5, 0, 5, 16, 16, sprite);
   runAnim = new Animation(0.08f, 6, 0, 5, 16, 16, sprite);
@@ -36,6 +35,8 @@ float height, int col, int row, float moveSpeed, sf::RenderWindow*& window, b2Wo
   rigidbody = new Rigidbody(world, new b2Vec2(position.x, position.y), width * scale, height * scale,
   b2BodyType::b2_dynamicBody, new b2Vec2(sprite->getOrigin().x, sprite->getOrigin().y),
   0.f, 1.f, 0.f, 0.f);
+
+  sprite->setOrigin(width / 2, height / 2);
 
   //circle->setRadius(2.f);
   //circle->setFillColor(sf::Color::Green);

@@ -13,6 +13,7 @@ Game::Game()
   //gravity = new b2Vec2(0.f, 9.8f);
   gravity = new b2Vec2(0.f, 0.f);
   world = new b2World(*gravity);
+  drawPhysics = new DrawPhysics(window);
 
   character1 = new Character(ASSETS_SPRITES, sf::Vector2f(100.f, 100.f), GAME_SCALE,
   16, 16, 0, 5, 200.f, window, world);
@@ -26,8 +27,12 @@ Game::~Game()
 
 void Game::Start()
 {
-  rectangle->setFillColor(sf::Color::Red);
-  rectangle->setPosition(sf::Vector2f(300.f, 500.f));
+  uint32 flags{};
+  flags += b2Draw::e_shapeBit;
+  //flags += b2Draw::e_pairBit;
+
+  world->SetDebugDraw(drawPhysics);
+  drawPhysics->SetFlags(flags);
 }
 
 void Game::Run()
@@ -81,6 +86,7 @@ void Game::MainLoop()
   {
     character1->Draw();
     text1->Draw();
+    world->DebugDraw();
   }
 
   void Game::InputHandle()
