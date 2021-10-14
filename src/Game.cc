@@ -2,7 +2,8 @@
 #include "Character.hh"
 
 sf::RectangleShape* rectangle{new sf::RectangleShape(sf::Vector2f(100.f, 100.f))};
-Character* character1{new Character()};
+Character* character1{};
+GameObject* chest1{};
 TextAsset* text1{};
 
 Game::Game()
@@ -15,10 +16,17 @@ Game::Game()
   world = new b2World(*gravity);
   drawPhysics = new DrawPhysics(window);
 
+  gameObjects = new std::vector<GameObject*>();
+
   character1 = new Character(ASSETS_SPRITES, sf::Vector2f(100.f, 100.f), GAME_SCALE,
   16, 16, 0, 5, 200.f, window, world);
-  text1 = new TextAsset(window, ASSETS_FONT, "ULSA Game Engine Sample", 
+  chest1 = new GameObject(ASSETS_SPRITES, sf::Vector2(500.f, 300.f), GAME_SCALE, 16, 16, 6, 1, b2BodyType::b2_staticBody, window, world);
+
+  text1 = new TextAsset(window, ASSETS_FONT, "ULSA Game Engine Sample",
   14, sf::Color::White, sf::Vector2f(50.f, 50.f));
+
+  gameObjects->push_back(character1);
+  gameObjects->push_back(chest1);
 }
 
 Game::~Game()
@@ -71,8 +79,10 @@ void Game::MainLoop()
 
   void Game::Update()
   {
-    //std::cout << "deltaTime: " << deltaTime << std::endl;
-    character1->Update();
+    for(auto& gameObject : *gameObjects)
+    {
+      gameObject->Update(deltaTime);
+    }
   }
 
   void Game::Render()
@@ -84,12 +94,15 @@ void Game::MainLoop()
 
   void Game::Draw()
   {
-    character1->Draw();
+    for(auto& gameObject : *gameObjects)
+    {
+      gameObject->Draw();
+    }
     text1->Draw();
-    world->DebugDraw();
+    //world->DebugDraw();
   }
 
   void Game::InputHandle()
   {
-    character1->Movement(deltaTime);
+
   }

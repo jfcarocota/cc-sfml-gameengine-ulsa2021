@@ -20,4 +20,5 @@ public:
   b2Vec2 GetPosition() const;
   sf::Vector2f GetPosition2SFML() const;
   void MoveBody(b2Vec2* velocity);
+  void FreezeRotation(bool freeze);
 };

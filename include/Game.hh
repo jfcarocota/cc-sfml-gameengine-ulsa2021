@@ -4,6 +4,7 @@
 #include<SFML/Graphics.hpp>
 #include<box2d/box2d.h>
 #include "DrawPhysics.hh"
+#include "GameObject.hh"
 
 class Game
 {
@@ -16,6 +17,8 @@ private:
 
   float deltaTime{};
   sf::Clock* gameClock{};
+
+  std::vector<GameObject*>* gameObjects;
 
   void MainLoop();
   void UpdatePhysics();

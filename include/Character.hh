@@ -3,19 +3,16 @@
 #include<string>
 #include<iostream>
 #include "Rigidbody.hh"
+#include "GameObject.hh"
 
-class Character
+class Character : public GameObject
 {
 private:
-  sf::Sprite* sprite{};
-  sf::Vector2f position{};
-  float scale{};
-  float width{};
-  float height{};
+
   float moveSpeed;
-  sf::Texture* texture;
-  sf::RenderWindow* window{};
-  Rigidbody* rigidbody{};
+
+  void Movement(float& deltaTime);
+  void FlipSprite();
 public:
   Character();
   Character(const char* textureUrl, sf::Vector2f position, 
@@ -23,8 +20,5 @@ public:
   sf::RenderWindow*& window, b2World*& world);
   ~Character();
 
-  void Update();
-  void Draw();
-  void Movement(float& deltaTime);
-  void FlipSprite();
+  void Update(float& deltaTime) override;
 };

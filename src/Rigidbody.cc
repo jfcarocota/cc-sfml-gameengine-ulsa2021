@@ -42,3 +42,8 @@ void Rigidbody::MoveBody(b2Vec2* velocity)
 {
   body->SetLinearVelocity(*velocity);
 }
+
+void Rigidbody::FreezeRotation(bool freeze)
+{
+  body->SetFixedRotation(freeze);
+}
