@@ -1,17 +1,13 @@
 #pragma once
 #include<SFML/Graphics.hpp>
 #include "Rigidbody.hh"
+#include "Drawable.hh"
 
 
 class GameObject
 {
 protected:
-  sf::Sprite* sprite{};
-  sf::Vector2f position{};
-  float scale{};
-  float width{};
-  float height{};
-  sf::Texture* texture;
+  Drawable* drawable{};
   sf::RenderWindow* window{};
   Rigidbody* rigidbody{};
 public:
