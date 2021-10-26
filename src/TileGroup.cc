@@ -23,18 +23,16 @@ float tileWidth, float tileHeight, float tileScale, int sizeX, int sizeY, const 
     for(int x{}; x < sizeX; x++)
     {
       int col{}, row{};
-      char currentCharater{};
+      int currentCharater{};
 
       *reader >> currentCharater;
-      col = std::stoi(&currentCharater);
+      col = currentCharater;
 
       *reader >> currentCharater;
-      row = std::stoi(&currentCharater);
+      row = currentCharater;
 
       tiles->push_back(new Tile(textureUrl, sf::Vector2f(tileWidth * x * tileScale, tileHeight * y * tileScale),
       tileScale, tileWidth, tileHeight, col, row, window));
-      std::cout << "(" << col << "," << row << "),";
-      //reader->ignore('\n');
     }
     std::cout << std::endl;
   }
