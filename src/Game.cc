@@ -21,6 +21,8 @@ Game::Game()
   gravity = new b2Vec2(0.f, 0.f);
   world = new b2World(*gravity);
   drawPhysics = new DrawPhysics(window);
+  contactEventManager = new ContactEventManager();
+  world->SetContactListener(contactEventManager);
 
   tileGroup = new TileGroup(window, ASSETS_TILES, 16, 16, GAME_SCALE, 11, 10, ASSETS_TILE_GROUP_1);
 
@@ -28,8 +30,11 @@ Game::Game()
 
   character1 = new Character(ASSETS_SPRITES, sf::Vector2f(100.f, 100.f), GAME_SCALE,
   16, 16, 0, 5, 200.f, window, world);
+  character1->SetTagtName("character");
   chest1 = new GameObject(ASSETS_SPRITES, sf::Vector2(500.f, 300.f), GAME_SCALE, 16, 16, 6, 1, b2BodyType::b2_staticBody, window, world);
+  chest1->SetTagtName("chest");
   candle = new Candle(ASSETS_SPRITES, sf::Vector2(500.f, 500.f), GAME_SCALE, 16, 16, 6, 3, window, world);
+  candle->SetTagtName("candle");
 
   //candleIdle = new Animation(0.05f, 3, 6, 11, 16, 16, drawable);
   text1 = new TextAsset(window, ASSETS_FONT, "ULSA Game Engine Sample",

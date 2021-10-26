@@ -5,6 +5,7 @@
 #include<box2d/box2d.h>
 #include "DrawPhysics.hh"
 #include "GameObject.hh"
+#include "ContactEventManager.hh"
 
 class Game
 {
@@ -14,6 +15,7 @@ private:
   b2World* world{};
   b2Vec2* gravity{};
   b2Draw* drawPhysics{};
+  ContactEventManager* contactEventManager{};
 
   float deltaTime{};
   sf::Clock* gameClock{};

@@ -2,7 +2,7 @@
 
 Rigidbody::Rigidbody(b2World*& wolrd, b2Vec2* position, float width, float height,
 b2BodyType bodyType, b2Vec2* origin, float angle, float density,
-float friction, float restitution)
+float friction, float restitution, void* data)
 {
   bodyDef = new b2BodyDef();
   bodyDef->type = bodyType;
@@ -19,6 +19,7 @@ float friction, float restitution)
   fixtureDef->shape = polysonShape;
 
   fixture = body->CreateFixture(fixtureDef);
+  body->GetUserData().pointer = reinterpret_cast<uintptr_t>(data);
 }
 
 Rigidbody::~Rigidbody()

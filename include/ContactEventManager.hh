@@ -1,7 +1,7 @@
 #pragma once
 #include<box2d/box2d.h>
 
-class ContactEventManager : b2ContactListener
+class ContactEventManager : public b2ContactListener
 {
 private:
 
