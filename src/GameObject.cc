@@ -20,6 +20,8 @@ b2BodyType bodyType, sf::RenderWindow*& window, b2World*& world)
 
 GameObject::~GameObject()
 {
+  delete rigidbody;
+  delete drawable;
 }
 
 void GameObject::Update(float& deltaTime)
@@ -31,12 +33,12 @@ void GameObject::Draw()
   window->draw(*drawable->GetSprite());
 }
 
-void GameObject::SetTagtName(const char* tagName)
+void GameObject::SetTagtName(std::string  tagName)
 {
   this->tagName = tagName;
 }
 
-const char* GameObject::GetTagName() const
+std::string GameObject::GetTagName() const
 {
   return tagName;
 }

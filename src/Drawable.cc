@@ -20,6 +20,8 @@ Drawable::Drawable(const char* textureUrl, sf::Vector2f position, float scale, f
 
 Drawable::~Drawable()
 {
+  delete sprite;
+  delete texture;
 }
 
 sf::Sprite* Drawable::GetSprite() const

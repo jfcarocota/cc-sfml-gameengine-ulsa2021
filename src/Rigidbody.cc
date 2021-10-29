@@ -4,6 +4,7 @@ Rigidbody::Rigidbody(b2World*& wolrd, b2Vec2* position, float width, float heigh
 b2BodyType bodyType, b2Vec2* origin, float angle, float density,
 float friction, float restitution, void* data)
 {
+  this->world = world;
   bodyDef = new b2BodyDef();
   bodyDef->type = bodyType;
   bodyDef->position = *position;
@@ -24,6 +25,7 @@ float friction, float restitution, void* data)
 
 Rigidbody::~Rigidbody()
 {
+  world->DestroyBody(body);
 }
 
 b2Body* Rigidbody::GetBody() const

@@ -12,6 +12,14 @@ Character::Character(const char* textureUrl, sf::Vector2f position, float scale,
 float height, int col, int row, float moveSpeed, sf::RenderWindow*& window, b2World*& world) :
 GameObject(textureUrl, position, scale, width, height, col, row, b2BodyType::b2_dynamicBody, window, world)
 {
+  soundBufferStepsSfx = new sf::SoundBuffer();
+  soundSFXSteps = new sf::Sound();
+  currentStepSFXTime = stepDelay;
+
+  soundBufferStepsSfx->loadFromFile("assets/audio/assets_audio_stepsfx.ogg");
+  soundSFXSteps->setBuffer(*soundBufferStepsSfx);
+  soundSFXSteps->setVolume(volume);
+
   this->moveSpeed = moveSpeed;
 
   rigidbody->FreezeRotation(true);
@@ -31,9 +39,16 @@ void Character::Update(float& deltaTime)
   Movement(deltaTime);
   FlipSprite();
 
+  currentStepSFXTime += deltaTime;
+
   if(std::abs(InputSystem::GetAxis().x) > 0 || std::abs(InputSystem::GetAxis().y) > 0)
   {
     runAnim->Play(deltaTime);
+    if(currentStepSFXTime >= stepDelay)
+    {
+      soundSFXSteps->play();
+      currentStepSFXTime = 0.f;
+    }
   }
   else
   {

@@ -10,6 +10,7 @@ private:
   b2Fixture* fixture{};
   b2FixtureDef* fixtureDef{};
   b2PolygonShape* polysonShape{};
+  b2World* world{};
 public:
   Rigidbody(b2World*& wolrd, b2Vec2* position, float width, float height,
   b2BodyType bodyType, b2Vec2* origin, float angle, float density,

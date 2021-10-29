@@ -4,12 +4,20 @@
 #include<iostream>
 #include "Rigidbody.hh"
 #include "GameObject.hh"
+#include<SFML/Audio.hpp>
 
 class Character : public GameObject
 {
 private:
 
   float moveSpeed;
+
+  sf::SoundBuffer* soundBufferStepsSfx{};
+  sf::Sound* soundSFXSteps{};
+
+  float volume{4.f};
+  float stepDelay{0.3f};
+  float currentStepSFXTime{};
 
   void Movement(float& deltaTime);
   void FlipSprite();
