@@ -16,15 +16,14 @@ Game::Game()
   window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), GAME_NAME);
   event = new sf::Event();
   gameClock = new sf::Clock();
-  //gravity = new b2Vec2(0.f, 9.8f);
   gravity = new b2Vec2(0.f, 0.f);
   world = new b2World(*gravity);
   drawPhysics = new DrawPhysics(window);
 
-  tileGroup = new TileGroup(window, ASSETS_TILES, 16, 16, GAME_SCALE, 11, 10, ASSETS_TILE_GROUP_1);
-
   gameObjects = new std::vector<GameObject*>();
   gameObjectsDeleteList = new std::vector<GameObject*>();
+
+  tileGroup = new TileGroup(window, ASSETS_TILES, 16, 16, GAME_SCALE, 11, 10, ASSETS_TILE_GROUP_1);
 
   contactEventManager = new ContactEventManager(gameObjectsDeleteList);
 
@@ -39,6 +38,9 @@ Game::Game()
 
 Game::~Game()
 {
+  delete world;
+  delete gravity;
+  delete window;
 }
 
 void Game::Start()
@@ -51,14 +53,13 @@ void Game::Start()
   gameObjects->push_back(chest1);
   gameObjects->push_back(candle);
 
-  world->SetContactListener(contactEventManager);
-
-
   uint32 flags{};
   flags += b2Draw::e_shapeBit;
 
   world->SetDebugDraw(drawPhysics);
   drawPhysics->SetFlags(flags);
+
+  world->SetContactListener(contactEventManager);
 }
 
 void Game::Run()
@@ -97,13 +98,6 @@ void Game::MainLoop()
 
   void Game::Update()
   {
-    for(auto& gameObjectPendingDelete : *gameObjectsDeleteList)
-    {
-      gameObjects->erase(std::remove(gameObjects->begin(), gameObjects->end(), gameObjectPendingDelete), gameObjects->end());
-      delete gameObjectPendingDelete;
-    }
-    gameObjectsDeleteList->clear();
-
     for(auto& gameObject : *gameObjects)
     {
       gameObject->Update(deltaTime);
@@ -112,6 +106,13 @@ void Game::MainLoop()
 
   void Game::Render()
   {
+    for(auto& gameObjectPendingDelete : *gameObjectsDeleteList)
+    {
+      gameObjects->erase(std::remove(gameObjects->begin(), gameObjects->end(), gameObjectPendingDelete), gameObjects->end());
+      delete gameObjectPendingDelete;
+    }
+    gameObjectsDeleteList->clear();
+
     window->clear(sf::Color::Black);
     Draw();
     window->display();
@@ -120,12 +121,13 @@ void Game::MainLoop()
   void Game::Draw()
   {
     tileGroup->Draw();
+
     for(auto& gameObject : *gameObjects)
     {
       gameObject->Draw();
     }
     text1->Draw();
-    //world->DebugDraw();
+    world->DebugDraw();
   }
 
   void Game::InputHandle()

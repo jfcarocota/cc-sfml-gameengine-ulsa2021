@@ -22,7 +22,7 @@ void ContactEventManager::BeginContact(b2Contact *contact)
   {
     if(goB->GetTagName().compare("chest") == 0)
     {
-      //gameObjectDeleteList->push_back(goB);
+      gameObjectDeleteList->push_back(goB);
     }
   }
 }

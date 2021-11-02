@@ -1,31 +1,26 @@
 #include "Character.hh"
 #include "InputSystem.hh"
-#include "Animation.hh"
 
-
-Animation* idleAnim{};
-Animation* runAnim{};
-
-Character::Character(){}
+//AudioClip* stepsAudioClip{new AudioClip("assets/audio/steps.ogg", 4.f)};
 
 Character::Character(const char* textureUrl, sf::Vector2f position, float scale, float width,
 float height, int col, int row, float moveSpeed, sf::RenderWindow*& window, b2World*& world) :
 GameObject(textureUrl, position, scale, width, height, col, row, b2BodyType::b2_dynamicBody, window, world)
 {
-  soundBufferStepsSfx = new sf::SoundBuffer();
-  soundSFXSteps = new sf::Sound();
+  animationsManager = new AnimationsManager();
+  audioManager = new AudioManager();
+
   currentStepSFXTime = stepDelay;
 
-  soundBufferStepsSfx->loadFromFile("assets/audio/assets_audio_stepsfx.ogg");
-  soundSFXSteps->setBuffer(*soundBufferStepsSfx);
-  soundSFXSteps->setVolume(volume);
 
   this->moveSpeed = moveSpeed;
 
   rigidbody->FreezeRotation(true);
 
-  idleAnim = new Animation(0.05f, 5, 0, 5, 16, 16, drawable);
-  runAnim = new Animation(0.08f, 6, 0, 5, 16, 16, drawable);
+  animationsManager->AddAnimation("idle", new Animation("assets/animations/character/idle.anim", drawable));
+  animationsManager->AddAnimation("walk", new Animation("assets/animations/character/walk.anim", drawable));
+
+  audioManager->AddAudioClip("steps", new AudioClip("assets/audio/steps.ogg", 4.f));
 }
 
 Character::~Character()
@@ -35,30 +30,32 @@ Character::~Character()
 void Character::Update(float& deltaTime)
 {
   GameObject::Update(deltaTime);
-
+  animationsManager->Update(deltaTime);
   Movement(deltaTime);
   FlipSprite();
-
-  currentStepSFXTime += deltaTime;
+  if(currentStepSFXTime < stepDelay)
+  {
+    currentStepSFXTime += deltaTime;
+  }
 
   if(std::abs(InputSystem::GetAxis().x) > 0 || std::abs(InputSystem::GetAxis().y) > 0)
   {
-    runAnim->Play(deltaTime);
+    animationsManager->Play("walk");
     if(currentStepSFXTime >= stepDelay)
     {
-      soundSFXSteps->play();
+      audioManager->Play("steps");
       currentStepSFXTime = 0.f;
     }
   }
   else
   {
-    idleAnim->Play(deltaTime);
+    animationsManager->Play("idle");
   }
 }
 
 void Character::Movement(float& deltaTime)
 {
-  rigidbody->MoveBody(new b2Vec2(InputSystem::GetAxis().x * moveSpeed,
+  rigidbody->MoveBody(b2Vec2(InputSystem::GetAxis().x * moveSpeed,
   InputSystem::GetAxis().y * moveSpeed));
 }
 

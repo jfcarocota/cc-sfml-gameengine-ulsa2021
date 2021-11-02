@@ -1,10 +1,5 @@
 #include "GameObject.hh"
 
-GameObject::GameObject()
-{
-
-}
-
 GameObject::GameObject(const char* textureUrl, sf::Vector2f position, float scale, float width, float height, int col, int row,
 b2BodyType bodyType, sf::RenderWindow*& window, b2World*& world)
 {
@@ -20,8 +15,8 @@ b2BodyType bodyType, sf::RenderWindow*& window, b2World*& world)
 
 GameObject::~GameObject()
 {
-  delete rigidbody;
   delete drawable;
+  delete rigidbody;
 }
 
 void GameObject::Update(float& deltaTime)

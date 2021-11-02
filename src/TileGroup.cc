@@ -18,6 +18,12 @@ float tileWidth, float tileHeight, float tileScale, int sizeX, int sizeY, const 
 
   reader->open(tileGroupUrl);
 
+  for(auto& tile : *tiles)
+  {
+    delete tile;
+  }
+  tiles->clear();
+
   for(int y{}; y < sizeY; y++)
   {
     for(int x{}; x < sizeX; x++)

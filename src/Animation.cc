@@ -1,13 +1,18 @@
 #include "Animation.hh"
 
-Animation:: Animation(float delay, int row,int startFrame, int endFrame, float width, float height, Drawable*& drawable)
+Animation:: Animation(const char* animationUrl, Drawable*& drawable)
 {
-  this->delay = delay;
-  this->row = row;
-  this->startFrame = startFrame;
-  this->endFrame = endFrame;
-  this->width = width;
-  this->height = height;
+  reader = new std::ifstream();
+
+  reader->open(animationUrl);
+  *reader >> delay;
+  *reader >> row;
+  *reader >> startFrame;
+  *reader >> endFrame;
+  *reader >> width;
+  *reader >> height;
+  reader->close();
+
   currentFrame = startFrame;
   this->drawable = drawable;
 }
