@@ -2,6 +2,7 @@
 #include<string>
 #include "CreateGameObject.hh"
 #include "CreateAnimation.hh"
+#include "CreateTileGroup.hh"
 
 void CheckArguments(int& argc, char**& argv);
 
@@ -21,6 +22,12 @@ void CheckArguments(int& argc, char**& argv)
     if(command == "creategameobject")
     {
       CreateGameObject(argv[2]);
+      break;
+    }
+    if(command == "createtilegroup")
+    {
+      CreateTileGroup(argv[2]);
+      break;
     }
     break;
   case 7:
