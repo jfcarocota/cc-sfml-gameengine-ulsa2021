@@ -11,8 +11,6 @@ private:
   int row{};
   int startFrame{};
   int endFrame{};
-  float width{};
-  float height{};
   int currentFrame{};
   Drawable* drawable;
   float timer{};

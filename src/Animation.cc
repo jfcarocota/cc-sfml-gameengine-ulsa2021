@@ -9,8 +9,6 @@ Animation:: Animation(const char* animationUrl, Drawable*& drawable)
   *reader >> row;
   *reader >> startFrame;
   *reader >> endFrame;
-  *reader >> width;
-  *reader >> height;
   reader->close();
 
   currentFrame = startFrame;
@@ -26,7 +24,7 @@ void Animation::Play(float& deltaTime)
   timer += deltaTime;
   if(timer >= delay)
   {
-    drawable->RebindRect(currentFrame * width, row * height, width, height);
+    drawable->RebindRect(currentFrame * drawable->GetWidth(), row * drawable->GetHeight(), drawable->GetWidth(), drawable->GetHeight());
     //cambiar de frame
     timer = 0.f;
     if(currentFrame < endFrame)

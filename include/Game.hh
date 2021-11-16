@@ -22,6 +22,7 @@ private:
 
   std::vector<GameObject*>* gameObjects;
   std::vector<GameObject*>* gameObjectsDeleteList;
+  //std::vector<UIElement*>* uiElements;
 
   void MainLoop();
   void UpdatePhysics();

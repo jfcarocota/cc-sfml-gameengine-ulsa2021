@@ -2,6 +2,7 @@
 #include "Character.hh"
 #include "Candle.hh"
 #include "TileGroup.hh"
+#include "ButtonElement.hh"
 
 Character* character1{};
 GameObject* chest1{};
@@ -10,6 +11,8 @@ Animation* candleIdle{};
 TextAsset* text1{};
 
 TileGroup* tileGroup{};
+
+ButtonElement* buttonElement1{};
 
 Game::Game()
 {
@@ -34,6 +37,9 @@ Game::Game()
 
   text1 = new TextAsset(window, ASSETS_FONT, "ULSA Game Engine Sample",
   14, sf::Color::White, sf::Vector2f(50.f, 50.f));
+
+  buttonElement1 = new ButtonElement(window, 100, 50, 600, 20, sf::Color::Black, sf::Color::Red, 2.f, 
+  ASSETS_FONT, "Button1", sf::Color::White);
 }
 
 Game::~Game()
@@ -98,6 +104,7 @@ void Game::MainLoop()
 
   void Game::Update()
   {
+    buttonElement1->Update();
     for(auto& gameObject : *gameObjects)
     {
       gameObject->Update(deltaTime);
@@ -128,6 +135,8 @@ void Game::MainLoop()
     }
     text1->Draw();
     world->DebugDraw();
+
+    buttonElement1->Draw();
   }
 
   void Game::InputHandle()

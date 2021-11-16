@@ -7,7 +7,7 @@ GameObject(textureUrl, position, scale, width, height, col, row, b2BodyType::b2_
 {
   animationsManager = new AnimationsManager();
 
-  animationsManager->AddAnimation("idle", new Animation("assets/animations/candle/idle.anim", drawable));
+  animationsManager->AddAnimation("idle", new Animation("assets/animations/candle/idle2.anim", drawable));
 }
 
 Candle::~Candle()

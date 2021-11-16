@@ -50,5 +50,6 @@
     "xutility": "cpp",
     "fstream": "cpp",
     "regex": "cpp"
-  }
+  },
+  "cmake.configureOnOpen": false
 }
