@@ -37,3 +37,8 @@ std::string GameObject::GetTagName() const
 {
   return tagName;
 }
+
+sf::Vector2f GameObject::GetPosition() const
+{
+  return rigidbody->GetPosition2SFML();
+}

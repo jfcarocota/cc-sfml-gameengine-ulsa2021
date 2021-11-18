@@ -13,6 +13,7 @@ TextAsset* text1{};
 TileGroup* tileGroup{};
 
 ButtonElement* buttonElement1{};
+sf::View* view{};
 
 Game::Game()
 {
@@ -22,6 +23,11 @@ Game::Game()
   gravity = new b2Vec2(0.f, 0.f);
   world = new b2World(*gravity);
   drawPhysics = new DrawPhysics(window);
+  view = new sf::View(sf::FloatRect(0.f, 0.f, WINDOW_WIDTH, WINDOW_HEIGHT));
+
+  sf::Image* iconTexture{new sf::Image()};
+  iconTexture->loadFromFile(ICON);
+  window->setIcon(32, 32, iconTexture->getPixelsPtr());
 
   gameObjects = new std::vector<GameObject*>();
   gameObjectsDeleteList = new std::vector<GameObject*>();
@@ -104,6 +110,7 @@ void Game::MainLoop()
 
   void Game::Update()
   {
+    view->setCenter(character1->GetPosition());
     buttonElement1->Update();
     for(auto& gameObject : *gameObjects)
     {
@@ -127,6 +134,7 @@ void Game::MainLoop()
 
   void Game::Draw()
   {
+    window->setView(*view);
     tileGroup->Draw();
 
     for(auto& gameObject : *gameObjects)
